@@ -70,11 +70,11 @@ close all;
 %% Inputs setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Overal inputs============================================================
-PoI = 101; % number of points of interest (PoI-1), with depot included
+PoI = 6; % number of points of interest (PoI-1), with depot included
 robots = 4; % total number of robots available
 MATRIX = cell(robots,6); % MATRIX that saves the outputs for the 6 algorithms
 random = 0; % 0 if false, 1 if true, for random scenary
-max_distance = 1500; % battery limit
+max_distance = 1000000000; % battery limit
 weight_wdm = 0; % determines how much importance is given in the balance of 
 %               minimizing the distance between the greatest and smallest
 %               routes, and minimizing the total distance
@@ -89,7 +89,7 @@ else
 end
 %==========================================================================
 % Display the computational time taken from 3 to PoI: applied in BF and MILP
-disp_time_bf_milp = 1; % display if 1,dont display if 0
+disp_time_bf_milp = 0; % display if 1,dont display if 0
 %==========================================================================
 % Random inputs============================================================
 number_of_random_iterations = 2; % number of times random will run for r amount of robots
@@ -112,15 +112,15 @@ end
 %==========================================================================
 % GA inputs================================================================
 pop_size = 80; % number of solutions per population, must be multiple of 8!!!
-num_iter = 200; % number of iterations
+num_iter = 2000; % number of iterations
 num_iter_time = inf; % 
 use_complex = 0; % is the flag wether to use complex mutation operators or not
-show_prog = 1; % shows the GA progress if true
+show_prog = 0; % shows the GA progress if true
 show_res = 0; % shows the GA results if true
 %==========================================================================
 % Charging points inputs===================================================
 additional_charging_points = []; %vector with coordinates for MTSP GAC
-amount_of_new_chargers = 2; % number of available chargers for MTSP GADC
+amount_of_new_chargers = 1; % number of available chargers for MTSP GADC
 %==========================================================================
 % Scenario + dist_matrix===================================================
 [PoILon, PoILat] = scenary(PoI, random); % scenario function
@@ -385,7 +385,7 @@ current_best_new_chargers = inf*ones(robots,2,amount_of_new_chargers);
 current_best_cpu_time = zeros(robots,1);
 current_best_robot_dist = Inf * ones(robots);
 
-for i=4:robots
+for i=2:robots
     [opt_rte, min_dist, opt_iter, ...   
     opt_time, dist_history, cases_min_dist, cases_min_dist_F, cases_routes_min, ...
     cases_opt_time, cases_opt_ite, cases_new_charger, cases_each_robot_dist] ...
